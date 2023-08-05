@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const butterfly = $('.butterfly');
+            let xPos = 0;
+            let yPos = 200;
+            let direction = 1;
+
+            function animateButterfly() {
+                // Update butterfly's horizontal position
+                xPos += direction * 2;
+
+                // Update butterfly's vertical position (simulate flight path)
+                yPos = 200 + 50 * Math.cos(xPos * 0.05);
+
+                butterfly.css({ transform: `translate(${xPos}px, ${yPos}px)` });
+
+                // Reverse direction when reaching screen edges
+                if (xPos >= $(window).width() - 50 || xPos <= 0) {
+                    direction *= -1;
+                }
+            }
+            // Set up animation loop using a timer
+            setInterval(animateButterfly, 30);
+
+
+            let count1 = 1
+            let isLeft1 = true
+            setInterval(function () {
+                if (isLeft1) {
+                    $('#image1').css("margin-left", "" + count1++ + "%")
+                    $('#image1').css("margin-top", "" + count1++ + "%")
+                    isLeft1 = (count1 <= 100) ? true : false
+                }
+                if (!isLeft1) {
+                    $('#image1').css("margin-left", "" + count1-- + "%")
+                    $('#image1').css("margin-top", "" + count1-- + "%")
+                    isLeft1 = (count1 <= 0) ? true : false
+                }
+            }, 150)
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .butterfly {
+            width: 50px;
+            height: 50px;
+            background-image: url('butterfly/butterfly.gif');
+            background-size: cover;
+            position: absolute;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="butterfly"></div>
+    <img id="image1" src="butterfly/butterfly3.gif" style="width: 10%;">
+</div>
+</body>
+
+</html>
