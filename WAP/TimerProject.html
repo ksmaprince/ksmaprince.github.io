@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Butterflies</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const numButterflies = 15; // Number of butterflies
+            const butterflies = [];
+            const images = ["butterfly.gif", "butterfly2.gif", "butterfly3.gif", "butterfly.gif"]
+
+            for (let i = 0; i < numButterflies; i++) {
+                createButterfly();
+            }
+
+            //arr[(Math.floor(Math.random() * arr.length))]
+
+            function createButterfly() {
+                const butterfly = $('<div class="butterfly"></div>');
+                let randomImage = images[(Math.floor(Math.random() * images.length))]
+                butterfly.css("background-image", "url('butterfly/" + randomImage + "')")
+                $('.butterflies-container').append(butterfly);
+                resetButterfly(butterfly);
+                butterflies.push(butterfly);
+            }
+
+            function resetButterfly(butterfly) {
+                const startX = Math.random() * window.innerWidth;
+                const startY = Math.random() * window.innerHeight;
+                const speed = Math.random() * 2 + 1;
+                butterfly.css({
+                    left: startX + 'px',
+                    top: startY + 'px',
+                    transition: 'none',
+                });
+
+                setTimeout(() => {
+                    butterfly.css('transition', `top ${speed}s linear, left ${speed}s linear`);
+                    butterfly.css({ left: '100%', top: startY + (Math.random() * 100 - 50) + 'px' });
+                }, 10);
+            }
+
+            function animateButterflies() {
+                for (const butterfly of butterflies) {
+                    if (parseInt(butterfly.css('left')) > window.innerWidth) {
+                        resetButterfly(butterfly);
+                    }
+                }
+            }
+
+            // Set up animation loop using a timer
+            setInterval(animateButterflies, 1000);
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .butterflies-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .butterfly {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            position: absolute;
+        }
+
+        .bg {
+            /* The image used */
+
+            background-image: url('images/flowers2.jpeg');
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <div class="butterflies-container"></div>
+    </div>
+
+</body>
+
+</html>
